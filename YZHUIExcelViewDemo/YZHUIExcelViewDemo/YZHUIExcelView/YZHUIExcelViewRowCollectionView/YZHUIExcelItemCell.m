@@ -90,7 +90,7 @@
         x = verticalLineWidth;
         cellWidth = cellWidth - verticalLineWidth;
         
-        self.firstSeparatorLine.backgroundColor = PURPLE_COLOR.CGColor;//self.verticalLineColor.CGColor;
+        self.firstSeparatorLine.backgroundColor = self.verticalLineColor.CGColor;
     }
     else {
         self.firstSeparatorLine.hidden = YES;
@@ -100,7 +100,7 @@
     self.separatorLine.size = CGSizeMake(verticalLineWidth, size.height);
     self.separatorLine.bottom = self.contentView.bottom;
     self.separatorLine.right = self.contentView.right;
-    self.separatorLine.backgroundColor = RED_COLOR.CGColor;//self.verticalLineColor.CGColor;
+    self.separatorLine.backgroundColor = self.verticalLineColor.CGColor;
 }
 
 -(UIView*)reusableExcelCellSubView
