@@ -246,18 +246,40 @@
     
     for (NSIndexPath *indexPath in indexPaths) {
         if (indexPath.excelRow < self.lockIndexPath.excelRow) {
-            [topIndexPaths addObject:[NSIndexPath indexPathForRow:indexPath.excelRow inSection:0]];
+            [topIndexPaths addObject:indexPath];
         }
         else {
-            [bottomIndexPaths addObject:[NSIndexPath indexPathForRow:indexPath.excelRow-self.lockIndexPath.excelRow inSection:0]];
+            [bottomIndexPaths addObject:indexPath];
         }
     }
     [self _updateExcelFrame];
     if (IS_AVAILABLE_NSSET_OBJ(topIndexPaths)) {
-        [self.topExcelContentView.tableView reloadRowsAtIndexPaths:topIndexPaths withRowAnimation:rowAnimation];
+        [self.topExcelContentView reloadRowsAtIndexPaths:topIndexPaths withRowAnimation:rowAnimation];
     }
-    else {
-        [self.bottomExcelContentView.tableView reloadRowsAtIndexPaths:bottomIndexPaths withRowAnimation:rowAnimation];
+    if (IS_AVAILABLE_NSSET_OBJ(bottomIndexPaths)) {
+        [self.bottomExcelContentView reloadRowsAtIndexPaths:bottomIndexPaths withRowAnimation:rowAnimation];
+    }
+}
+
+-(void)reloadItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
+{
+    NSMutableArray<NSIndexPath*> *topIndexPaths = [NSMutableArray array];
+    NSMutableArray<NSIndexPath*> *bottomIndexPaths = [NSMutableArray array];
+    
+    for (NSIndexPath *indexPath in indexPaths) {
+        if (indexPath.excelRow < self.lockIndexPath.excelRow) {
+            [topIndexPaths addObject:indexPath];
+        }
+        else {
+            [bottomIndexPaths addObject:indexPath];
+        }
+    }
+
+    if (IS_AVAILABLE_NSSET_OBJ(topIndexPaths)) {
+        [self.topExcelContentView reloadItemsAtIndexPaths:topIndexPaths];
+    }
+    if (IS_AVAILABLE_NSSET_OBJ(bottomIndexPaths)) {
+        [self.bottomExcelContentView reloadItemsAtIndexPaths:bottomIndexPaths];
     }
 }
 @end

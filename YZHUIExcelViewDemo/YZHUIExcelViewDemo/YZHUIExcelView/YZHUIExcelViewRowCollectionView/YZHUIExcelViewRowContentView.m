@@ -16,7 +16,6 @@
  ****************************************************************************/
 @interface YZHUIExcelViewRowContentView () <UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,YZHUIExcelItemCellDelegate>
 
-@property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) YZHUIExcelViewRowCollectionViewLayout *flowLayout;
 
 @end
@@ -58,7 +57,7 @@
 
 -(void)_setupRowContentViewChildView
 {    
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.flowLayout];
+    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.flowLayout];
     self.collectionView.bounces = NO;
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -128,19 +127,16 @@
     NSExcelRowScrollType scrollType = NSExcelRowScrollTypeNull;
     NSExcelRowScrollState scrollState = NSExcelRowScrollStateMove;
     if (scrollView.panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-//        NSLog(@"rowIndex=%ld,state=%ld",self.excelRowIndex, scrollView.panGestureRecognizer.state);
         scrollType = NSExcelRowScrollTypeDrive;
         scrollState = NSExcelRowScrollStateBegin;
     }
     else if (scrollView.panGestureRecognizer.state == UIGestureRecognizerStateChanged)
     {
-//        NSLog(@"rowIndex=%ld,state=%ld",self.excelRowIndex, scrollView.panGestureRecognizer.state);
         scrollType = NSExcelRowScrollTypeDrive;
         scrollState = NSExcelRowScrollStateMove;
     }
     else if (scrollView.panGestureRecognizer.state == UIGestureRecognizerStateEnded)
     {
-//        NSLog(@"rowIndex=%ld,state=%ld",self.excelRowIndex, scrollView.panGestureRecognizer.state);
         scrollType = NSExcelRowScrollTypeDrive;
         scrollState = NSExcelRowScrollStateEnd;
     }
@@ -148,7 +144,6 @@
     {
     }
     if (self.excelRowIndex == self.scrollInfo.driveScrollRowIndex) {
-//        NSLog(@"rowIndex=%ld,state=%ld",self.excelRowIndex, scrollView.panGestureRecognizer.state);
     }
     
     [self _dispatchScrollInfo:scrollView scrollType:scrollType scrollState:scrollState];
@@ -156,22 +151,18 @@
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-//    NSLog(@"%s",__FUNCTION__);
     [self _dispatchScrollInfo:scrollView scrollType:NSExcelRowScrollTypeDrive scrollState:NSExcelRowScrollStateBegin];
 }
 
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     if (!decelerate) {
-        //这里不一定会停止的
-//        NSLog(@"%s",__FUNCTION__);
         [self _dispatchScrollInfo:scrollView scrollType:NSExcelRowScrollTypeDrive scrollState:NSExcelRowScrollStateEnd];
     }
 }
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-//    NSLog(@"%s",__FUNCTION__);
     [self _dispatchScrollInfo:scrollView scrollType:NSExcelRowScrollTypeDrive scrollState:NSExcelRowScrollStateEnd];
 }
 
@@ -196,7 +187,6 @@
     if (![self _dispatchScrollInfoCheck:scrollView]) {
         return;
     }
-//    NSLog(@"rowIndex=%ld,state=%ld,isTracking=%@,isDraging=%@,isDeclerating=%@",self.excelRowIndex,scrollState,scrollView.isTracking ? @"YES":@"NO", scrollView.isDragging?@"YES":@"NO",scrollView.isDecelerating?@"YES":@"NO");
     self.scrollInfo.scrollType = NSExcelRowScrollTypeDrive;
     self.scrollInfo.scrollContentOffset = scrollView.contentOffset;
     self.scrollInfo.driveScrollRowIndex = self.excelRowIndex;
@@ -225,21 +215,12 @@
 #pragma mark YZHUIExcelItemCellDelegate
 -(void)excelItemCell:(YZHUIExcelItemCell *)excelItemCell touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-//    NSLog(@"touchesRowIndex=%ld",self.excelRowIndex);
-//    [self _dispatchScrollInfo:self.collectionView scrollType:NSExcelRowScrollTypeDrive scrollState:NSExcelRowScrollStateEnd];
 }
 
 -(void)setScrollInfo:(NSExcelRowScrollInfo *)scrollInfo
 {
     _scrollInfo = scrollInfo;
-//    self.collectionView.decelerationRate = 100;
     [self.collectionView setContentOffset:scrollInfo.scrollContentOffset animated:NO];
 }
-
--(void)reloadData
-{
-    [self.collectionView reloadData];
-}
-
 
 @end

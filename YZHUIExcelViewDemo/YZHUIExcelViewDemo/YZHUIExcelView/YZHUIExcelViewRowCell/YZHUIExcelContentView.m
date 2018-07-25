@@ -276,4 +276,48 @@
     [self _doLocalOtherExcelRowScroll:newScrollInfo canDriveScroll:canDriveScroll];
     return canDriveScroll;
 }
+
+- (void)reloadRowsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation
+{
+    if (self.contentViewModel == nil) {
+        return;
+    }
+    NSMutableArray *reloadRows = [NSMutableArray array];
+    
+    NSInteger rowCnt = self.contentViewModel.excelRowCnt;
+    NSInteger startRowIndex = self.contentViewModel.startRowIndex;
+    [indexPaths enumerateObjectsUsingBlock:^(NSIndexPath * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (obj.excelRow >= startRowIndex && obj.excelRow < startRowIndex + rowCnt) {
+            [reloadRows addObject:[NSIndexPath indexPathForRow:obj.excelRow - startRowIndex inSection:0]];
+        }
+    }];
+    
+    if (IS_AVAILABLE_NSSET_OBJ(reloadRows)) {
+        [self.tableView reloadRowsAtIndexPaths:reloadRows withRowAnimation:animation];
+    }
+}
+
+-(void)reloadItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
+{
+    if (self.contentViewModel == nil) {
+        return;
+    }
+    
+    NSMutableArray *reloadItems = [NSMutableArray array];
+    
+    NSInteger startRowIndex = self.contentViewModel.startRowIndex;
+    
+    [self.tableView.indexPathsForVisibleRows enumerateObjectsUsingBlock:^(NSIndexPath * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSInteger excelRowIndex = obj.row + startRowIndex;
+        [indexPaths enumerateObjectsUsingBlock:^(NSIndexPath * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (obj.excelRow == excelRowIndex) {
+                [reloadItems addObject:obj];
+            }
+        }];
+    }];
+    
+    [self.tableView.visibleCells enumerateObjectsUsingBlock:^(YZHUIExcelViewRowCell * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj reloadItemsAtIndexPaths:reloadItems];
+    }];
+}
 @end

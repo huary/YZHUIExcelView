@@ -49,4 +49,6 @@
 
 -(void)reloadRowsAtIndexPaths:(NSArray<NSIndexPath*>*)indexPaths withRowAnimation:(UITableViewRowAnimation)rowAnimation;
 
+-(void)reloadItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;
+
 @end

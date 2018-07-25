@@ -55,12 +55,15 @@
  *****************************************************************************/
 @interface YZHUIExcelContentView : UIView
 
-@property (nonatomic, strong) YZHUIExcelContentViewModel *contentViewModel;
-
 @property (nonatomic, strong, readonly) UITableView *tableView;
+
+@property (nonatomic, strong) YZHUIExcelContentViewModel *contentViewModel;
 
 @property (nonatomic, weak) id<YZHUIExcelContentViewDelegate> delegate;
 
 -(BOOL)canUpdateExcelRowScrollInfo:(NSExcelRowScrollInfo*)newScrollInfo;
 
+- (void)reloadRowsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation;
+
+-(void)reloadItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;
 @end

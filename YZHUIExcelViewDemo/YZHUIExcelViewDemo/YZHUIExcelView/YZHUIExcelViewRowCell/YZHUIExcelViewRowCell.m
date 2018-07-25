@@ -8,6 +8,7 @@
 
 #import "YZHUIExcelViewRowCell.h"
 #import "YZHUIExcelViewRowContentView.h"
+#import "NSIndexPath+YZHUIExcelView.h"
 
 /********************************************************************
  *YZHUIExcelViewRowCellModel
@@ -149,13 +150,51 @@ IMPLEMENTATION_FOR_CLASS(YZHUIExcelViewRowCellModel)
     self.rightScrollContentView.verticalLineWidth = cellModel.verticalLineWidth;
     self.rightScrollContentView.verticalLineColor = cellModel.verticalLineColor;
     
-    [self.leftLockContentView reloadData];
-    [self.rightScrollContentView reloadData];
+    [self.leftLockContentView.collectionView reloadData];
+    [self.rightScrollContentView.collectionView reloadData];
 }
 
 -(void)updateRightScrollViewWithScrollInfo:(NSExcelRowScrollInfo*)scrollInfo
 {
     self.rightScrollContentView.scrollInfo = scrollInfo;
+}
+
+- (void)reloadItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
+{
+    if (self.cellModel == nil) {
+        return;
+    }
+    
+    NSMutableArray *leftReloadIndexPaths = [NSMutableArray array];
+    NSMutableArray *rightReloadIndexPaths = [NSMutableArray array];
+    NSInteger leftCnt = self.cellModel.cellInLeftLockViewCnt;
+    NSInteger rightCnt = self.cellModel.cellInRightScrollViewCnt;
+    [indexPaths enumerateObjectsUsingBlock:^(NSIndexPath * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (obj.excelRow != self.cellModel.rowIndex) {
+            return ;
+        }
+        if (obj.excelColumn < leftCnt) {
+            [leftReloadIndexPaths addObject:[NSIndexPath indexPathForItem:obj.excelColumn inSection:0]];
+        }
+        else {
+            NSInteger index = obj.excelColumn - leftCnt;
+            if (index < rightCnt) {
+                [rightReloadIndexPaths addObject:[NSIndexPath indexPathForItem:index inSection:0]];
+            }
+        }
+    }];
+    if (IS_AVAILABLE_NSSET_OBJ(leftReloadIndexPaths)) {
+        [self.leftLockContentView.collectionView reloadItemsAtIndexPaths:leftReloadIndexPaths];
+    }
+    if (IS_AVAILABLE_NSSET_OBJ(rightReloadIndexPaths)) {
+        [self.rightScrollContentView.collectionView reloadItemsAtIndexPaths:rightReloadIndexPaths];
+    }
+}
+
+-(void)reloadData
+{
+    [self.leftLockContentView.collectionView reloadData];
+    [self.rightScrollContentView.collectionView reloadData];
 }
 
 #pragma mark YZHUIExcelViewRowContentViewDelegate
@@ -200,6 +239,8 @@ IMPLEMENTATION_FOR_CLASS(YZHUIExcelViewRowCellModel)
     }
     return YES;
 }
+
+
 
 @end
 

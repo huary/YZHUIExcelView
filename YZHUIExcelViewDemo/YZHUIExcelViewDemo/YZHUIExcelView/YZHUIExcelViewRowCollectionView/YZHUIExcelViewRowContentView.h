@@ -30,6 +30,8 @@
  ****************************************************************************/
 @interface YZHUIExcelViewRowContentView : UIView
 
+@property (nonatomic, strong, readonly) UICollectionView *collectionView;
+
 @property (nonatomic, assign) NSInteger excelRowIndex;
 @property (nonatomic, assign) NSInteger startColumnIndex;
 
@@ -43,7 +45,5 @@
 @property (nonatomic, strong) UIColor *verticalLineColor;
 
 @property (nonatomic, weak) id<YZHUIExcelViewRowContentViewDelegate> delegate;
-
--(void)reloadData;
 
 @end

@@ -60,4 +60,7 @@
 
 -(void)updateRightScrollViewWithScrollInfo:(NSExcelRowScrollInfo*)scrollInfo;
 
+- (void)reloadItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;
+
+-(void)reloadData;
 @end
