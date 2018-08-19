@@ -92,7 +92,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([self.delegate respondsToSelector:@selector(excelContentView:heightForRowAtIndex:)]) {
-        CGFloat height= [self.delegate excelContentView:self heightForRowAtIndex:indexPath.row];
+        CGFloat height = [self.delegate excelContentView:self heightForRowAtIndex:indexPath.row];
         return height;
     }
     return 40;

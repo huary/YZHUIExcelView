@@ -28,7 +28,7 @@
 -(void)_setupChildView
 {
     CGFloat width = SCREEN_WIDTH * 0.96;
-    CGFloat height = SCREEN_HEIGHT - 20;
+    CGFloat height = SCREEN_HEIGHT - 40;
     CGFloat x = (SCREEN_WIDTH - width)/2;
     CGFloat y = (SCREEN_HEIGHT - height)/2;
     self.excelView = [[YZHUIExcelView alloc] init];

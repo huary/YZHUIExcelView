@@ -154,6 +154,51 @@ IMPLEMENTATION_FOR_CLASS(YZHUIExcelViewRowCellModel)
     [self.rightScrollContentView.collectionView reloadData];
 }
 
+#pragma mark YZHUIExcelViewRowContentViewDelegate
+-(NSInteger)numberOfExcelCellsInRowContentView:(YZHUIExcelViewRowContentView *)rowContentView
+{
+    if (self.leftLockContentView == rowContentView) {
+        return self.cellModel.cellInLeftLockViewCnt;
+    }
+    else
+    {
+        return self.cellModel.cellInRightScrollViewCnt;
+    }
+}
+
+-(UIView*)excelViewRowContentView:(YZHUIExcelViewRowContentView*)excelRowContentView excelCellForItemAtIndexPath:(NSIndexPath *)indexPath withReusableExcelCellView:(UIView *)reusableExcelCellView
+{
+    if ([self.delegate respondsToSelector:@selector(excelViewRowCell:excelCellForItemAtIndexPath:withReusableExcelCellView:)]) {
+        return [self.delegate excelViewRowCell:self excelCellForItemAtIndexPath:indexPath withReusableExcelCellView:reusableExcelCellView];
+    }
+    return nil;
+}
+
+-(CGSize)excelViewRowContentView:(YZHUIExcelViewRowContentView*)excelRowContentView excelCellSizeForItemAtIndexPath:(NSIndexPath*)indexPath
+{
+    if ([self.delegate respondsToSelector:@selector(excelViewRowCell:excelCellSizeForItemAtIndexPath:)]) {
+        CGSize itemSize = [self.delegate excelViewRowCell:self excelCellSizeForItemAtIndexPath:indexPath];
+        return itemSize;
+    }
+    return CGSizeZero;
+}
+
+-(void)excelViewRowContentView:(YZHUIExcelViewRowContentView *)excelRowContentView didSelectExcelCellItemAtIndexPath:(NSIndexPath *)indexPath withReusableExcelCellView:(UIView *)reusableExcelCellView
+{
+    if ([self.delegate respondsToSelector:@selector(excelViewRowCell:didSelectExcelCellItemAtIndexPath:withReusableExcelCellView:)]) {
+        [self.delegate excelViewRowCell:self didSelectExcelCellItemAtIndexPath:indexPath withReusableExcelCellView:reusableExcelCellView];
+    }
+}
+
+-(BOOL)excelViewRowContentView:(YZHUIExcelViewRowContentView *)excelRowContentView canScrollExcelRowWithScrollInfo:(NSExcelRowScrollInfo *)scrollInfo
+{
+    if ([self.delegate respondsToSelector:@selector(excelViewRowCell:canScrollExcelRowWithScrollInfo:)]) {
+        return [self.delegate excelViewRowCell:self canScrollExcelRowWithScrollInfo:scrollInfo];
+    }
+    return YES;
+}
+
+#pragma mark public event
 -(void)updateRightScrollViewWithScrollInfo:(NSExcelRowScrollInfo*)scrollInfo
 {
     self.rightScrollContentView.scrollInfo = scrollInfo;
@@ -196,51 +241,6 @@ IMPLEMENTATION_FOR_CLASS(YZHUIExcelViewRowCellModel)
     [self.leftLockContentView.collectionView reloadData];
     [self.rightScrollContentView.collectionView reloadData];
 }
-
-#pragma mark YZHUIExcelViewRowContentViewDelegate
--(NSInteger)numberOfExcelCellsInRowContentView:(YZHUIExcelViewRowContentView *)rowContentView
-{
-    if (self.leftLockContentView == rowContentView) {
-        return self.cellModel.cellInLeftLockViewCnt;
-    }
-    else
-    {
-        return self.cellModel.cellInRightScrollViewCnt;
-    }
-}
-
--(UIView*)excelViewRowContentView:(YZHUIExcelViewRowContentView*)excelRowContentView excelCellForItemAtIndexPath:(NSIndexPath *)indexPath withReusableExcelCellView:(UIView *)reusableExcelCellView
-{
-    if ([self.delegate respondsToSelector:@selector(excelViewRowCell:excelCellForItemAtIndexPath:withReusableExcelCellView:)]) {
-        return [self.delegate excelViewRowCell:self excelCellForItemAtIndexPath:indexPath withReusableExcelCellView:reusableExcelCellView];
-    }
-    return nil;
-}
-
--(CGSize)excelViewRowContentView:(YZHUIExcelViewRowContentView*)excelRowContentView excelCellSizeForItemAtIndexPath:(NSIndexPath*)indexPath
-{
-    if ([self.delegate respondsToSelector:@selector(excelViewRowCell:excelCellSizeForItemAtIndexPath:)]) {
-        return [self.delegate excelViewRowCell:self excelCellSizeForItemAtIndexPath:indexPath];
-    }
-    return CGSizeZero;
-}
-
--(void)excelViewRowContentView:(YZHUIExcelViewRowContentView *)excelRowContentView didSelectExcelCellItemAtIndexPath:(NSIndexPath *)indexPath withReusableExcelCellView:(UIView *)reusableExcelCellView
-{
-    if ([self.delegate respondsToSelector:@selector(excelViewRowCell:didSelectExcelCellItemAtIndexPath:withReusableExcelCellView:)]) {
-        [self.delegate excelViewRowCell:self didSelectExcelCellItemAtIndexPath:indexPath withReusableExcelCellView:reusableExcelCellView];
-    }
-}
-
--(BOOL)excelViewRowContentView:(YZHUIExcelViewRowContentView *)excelRowContentView canScrollExcelRowWithScrollInfo:(NSExcelRowScrollInfo *)scrollInfo
-{
-    if ([self.delegate respondsToSelector:@selector(excelViewRowCell:canScrollExcelRowWithScrollInfo:)]) {
-        return [self.delegate excelViewRowCell:self canScrollExcelRowWithScrollInfo:scrollInfo];
-    }
-    return YES;
-}
-
-
 
 @end
 
