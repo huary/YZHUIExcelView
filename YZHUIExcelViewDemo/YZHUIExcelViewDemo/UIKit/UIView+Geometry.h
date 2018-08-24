@@ -8,61 +8,77 @@
 
 #import <UIKit/UIKit.h>
 
-#define SET_OBJ_top(OBJ,TOP)        {CGRect F = OBJ.frame; F.origin.y = TOP; OBJ.frame=F;}
-#define SET_OBJ_left(OBJ,LEFT)      {CGRect F = OBJ.frame; F.origin.x = LEFT; OBJ.frame=F;}
-#define SET_OBJ_right(OBJ,RIGHT)    {CGRect F = OBJ.frame; F.origin.x = RIGHT - F.size.width; OBJ.frame=F;}
-#define SET_OBJ_bottom(OBJ,BOTTOM)  {CGRect F = OBJ.frame; F.origin.y = BOTTOM - F.size.height; OBJ.frame=F;}
-#define SET_OBJ_width(OBJ,WIDTH)    {CGRect F = OBJ.frame; F.size.width = WIDTH; OBJ.frame=F;}
-#define SET_OBJ_height(OBJ,HEIGHT)  {CGRect F = OBJ.frame; F.size.height = HEIGHT; OBJ.frame=F;}
-#define SET_OBJ_centerX(OBJ,CX)     {OBJ.center = CGPointMake(CX,OBJ.center.y);}
-#define SET_OBJ_centerY(OBJ,CY)     {OBJ.center = CGPointMake(OBJ.center.x,CY);}
-#define SET_OBJ_origin(OBJ,ORG)     {CGRect F = OBJ.frame; F.origin = ORG; OBJ.frame=F;}
-#define SET_OBJ_size(OBJ, SIZE)     {CGRect F = OBJ.frame; F.size = SIZE; OBJ.frame=F;}
+#define UPDATE_VIEW_FRAME(VIEW, FIELD, VAL)   {CGRect F = VIEW.frame; F.FIELD = VAL; VIEW.frame = F;}
+#define UPDATE_VIEW_CENTER(VIEW, FIELD, VAL)  {CGPoint C = VIEW.center; C.FIELD = VAL; VIEW.center = C;}
 
-#define GET_OBJ_top(OBJ)            (OBJ.frame.origin.y)
-#define GET_OBJ_left(OBJ)           (OBJ.frame.origin.x)
-#define GET_OBJ_right(OBJ)          (OBJ.frame.origin.x + OBJ.frame.size.width)
-#define GET_OBJ_bottom(OBJ)         (OBJ.frame.origin.y + OBJ.frame.size.height)
-#define GET_OBJ_width(OBJ)          (OBJ.frame.size.width)
-#define GET_OBJ_height(OBJ)         (OBJ.frame.size.height)
-#define GET_OBJ_centerX(OBJ)        (OBJ.center.x)
-#define GET_OBJ_centerY(OBJ)        (OBJ.center.y)
-#define GET_OBJ_origin(OBJ)         (OBJ.frame.origin)
-#define GET_OBJ_size(OBJ)           (OBJ.frame.size)
+//#define SET_VIEW_top(VIEW,TOP)        {CGRect F = VIEW.frame; F.origin.y = TOP; VIEW.frame=F;}
+//#define SET_VIEW_left(VIEW,LEFT)      {CGRect F = VIEW.frame; F.origin.x = LEFT; VIEW.frame=F;}
+//#define SET_VIEW_right(VIEW,RIGHT)    {CGRect F = VIEW.frame; F.origin.x = RIGHT - F.size.width; VIEW.frame=F;}
+//#define SET_VIEW_bottom(VIEW,BOTTOM)  {CGRect F = VIEW.frame; F.origin.y = BOTTOM - F.size.height; VIEW.frame=F;}
+//#define SET_VIEW_width(VIEW,WIDTH)    {CGRect F = VIEW.frame; F.size.width = WIDTH; VIEW.frame=F;}
+//#define SET_VIEW_height(VIEW,HEIGHT)  {CGRect F = VIEW.frame; F.size.height = HEIGHT; VIEW.frame=F;}
+//#define SET_VIEW_centerX(VIEW,CX)     {VIEW.center = CGPointMake(CX,VIEW.center.y);}
+//#define SET_VIEW_centerY(VIEW,CY)     {VIEW.center = CGPointMake(VIEW.center.x,CY);}
+//#define SET_VIEW_origin(VIEW,ORG)     {CGRect F = VIEW.frame; F.origin = ORG; VIEW.frame=F;}
+//#define SET_VIEW_size(VIEW, SIZE)     {CGRect F = VIEW.frame; F.size = SIZE; VIEW.frame=F;}
+
+#define SET_VIEW_top(VIEW,TOP)        UPDATE_VIEW_FRAME(VIEW, origin.y, TOP)
+#define SET_VIEW_left(VIEW,LEFT)      UPDATE_VIEW_FRAME(VIEW, origin.x, LEFT)
+#define SET_VIEW_right(VIEW,RIGHT)    UPDATE_VIEW_FRAME(VIEW, origin.x, RIGHT - F.size.width)
+#define SET_VIEW_bottom(VIEW,BOTTOM)  UPDATE_VIEW_FRAME(VIEW, origin.y, BOTTOM - F.size.height)
+#define SET_VIEW_width(VIEW,WIDTH)    UPDATE_VIEW_FRAME(VIEW, size.width, WIDTH)
+#define SET_VIEW_height(VIEW,HEIGHT)  UPDATE_VIEW_FRAME(VIEW, size.height, HEIGHT)
+#define SET_VIEW_centerX(VIEW,CX)     UPDATE_VIEW_CENTER(VIEW, x, CX)
+#define SET_VIEW_centerY(VIEW,CY)     UPDATE_VIEW_CENTER(VIEW, y, CY)
+#define SET_VIEW_origin(VIEW,ORG)     UPDATE_VIEW_FRAME(VIEW, origin, ORG)
+#define SET_VIEW_size(VIEW, SIZE)     UPDATE_VIEW_FRAME(VIEW, size, SIZE)
 
 
-#define SET_OBJ_TOP(OBJ,TOP)        SET_OBJ_top(OBJ,TOP)
-#define SET_OBJ_LEFT(OBJ,LEFT)      SET_OBJ_left(OBJ,LEFT)
-#define SET_OBJ_RIGHT(OBJ,RIGHT)    SET_OBJ_right(OBJ,RIGHT)
-#define SET_OBJ_BOTTOM(OBJ,BOTTOM)  SET_OBJ_bottom(OBJ,BOTTOM)
-#define SET_OBJ_WIDTH(OBJ,WIDTH)    SET_OBJ_width(OBJ,WIDTH)
-#define SET_OBJ_HEIGHT(OBJ,HEIGHT)  SET_OBJ_height(OBJ,HEIGHT)
-#define SET_OBJ_CENTER_X(OBJ,CX)    SET_OBJ_centerX(OBJ,CX)
-#define SET_OBJ_CENTER_Y(OBJ,CY)    SET_OBJ_centerY(OBJ,CY)
-#define SET_OBJ_ORIGIN(OBJ,ORG)     SET_OBJ_origin(OBJ,ORG)
-#define SET_OBJ_SIZE(OBJ, SIZE)     SET_OBJ_size(OBJ, SIZE)
 
-#define GET_OBJ_TOP(OBJ)            GET_OBJ_top(OBJ)
-#define GET_OBJ_LEFT(OBJ)           GET_OBJ_left(OBJ)
-#define GET_OBJ_RIGHT(OBJ)          GET_OBJ_right(OBJ)
-#define GET_OBJ_BOTTOM(OBJ)         GET_OBJ_bottom(OBJ)
-#define GET_OBJ_WIDTH(OBJ)          SET_OBJ_width(OBJ)
-#define GET_OBJ_HEIGHT(OBJ)         SET_OBJ_height(OBJ)
-#define GET_OBJ_CENTER_X(OBJ)       SET_OBJ_centerX(OBJ)
-#define GET_OBJ_CENTER_Y(OBJ)       SET_OBJ_centerY(OBJ)
-#define GET_OBJ_ORIGIN(OBJ)         SET_OBJ_origin(OBJ)
-#define GET_OBJ_SIZE(OBJ)           SET_OBJ_size(OBJ)
+#define GET_VIEW_top(VIEW)            (VIEW.frame.origin.y)
+#define GET_VIEW_left(VIEW)           (VIEW.frame.origin.x)
+#define GET_VIEW_right(VIEW)          (VIEW.frame.origin.x + VIEW.frame.size.width)
+#define GET_VIEW_bottom(VIEW)         (VIEW.frame.origin.y + VIEW.frame.size.height)
+#define GET_VIEW_width(VIEW)          (VIEW.frame.size.width)
+#define GET_VIEW_height(VIEW)         (VIEW.frame.size.height)
+#define GET_VIEW_centerX(VIEW)        (VIEW.center.x)
+#define GET_VIEW_centerY(VIEW)        (VIEW.center.y)
+#define GET_VIEW_origin(VIEW)         (VIEW.frame.origin)
+#define GET_VIEW_size(VIEW)           (VIEW.frame.size)
+
+
+#define SET_VIEW_TOP(VIEW,TOP)        SET_VIEW_top(VIEW,TOP)
+#define SET_VIEW_LEFT(VIEW,LEFT)      SET_VIEW_left(VIEW,LEFT)
+#define SET_VIEW_RIGHT(VIEW,RIGHT)    SET_VIEW_right(VIEW,RIGHT)
+#define SET_VIEW_BOTTOM(VIEW,BOTTOM)  SET_VIEW_bottom(VIEW,BOTTOM)
+#define SET_VIEW_WIDTH(VIEW,WIDTH)    SET_VIEW_width(VIEW,WIDTH)
+#define SET_VIEW_HEIGHT(VIEW,HEIGHT)  SET_VIEW_height(VIEW,HEIGHT)
+#define SET_VIEW_CENTER_X(VIEW,CX)    SET_VIEW_centerX(VIEW,CX)
+#define SET_VIEW_CENTER_Y(VIEW,CY)    SET_VIEW_centerY(VIEW,CY)
+#define SET_VIEW_ORIGIN(VIEW,ORG)     SET_VIEW_origin(VIEW,ORG)
+#define SET_VIEW_SIZE(VIEW, SIZE)     SET_VIEW_size(VIEW, SIZE)
+
+#define GET_VIEW_TOP(VIEW)            GET_VIEW_top(VIEW)
+#define GET_VIEW_LEFT(VIEW)           GET_VIEW_left(VIEW)
+#define GET_VIEW_RIGHT(VIEW)          GET_VIEW_right(VIEW)
+#define GET_VIEW_BOTTOM(VIEW)         GET_VIEW_bottom(VIEW)
+#define GET_VIEW_WIDTH(VIEW)          SET_VIEW_width(VIEW)
+#define GET_VIEW_HEIGHT(VIEW)         SET_VIEW_height(VIEW)
+#define GET_VIEW_CENTER_X(VIEW)       SET_VIEW_centerX(VIEW)
+#define GET_VIEW_CENTER_Y(VIEW)       SET_VIEW_centerY(VIEW)
+#define GET_VIEW_ORIGIN(VIEW)         SET_VIEW_origin(VIEW)
+#define GET_VIEW_SIZE(VIEW)           SET_VIEW_size(VIEW)
 
 #define GET_PROPERTY(TYPE,PROPERTY)             \
     -(TYPE)PROPERTY                             \
     {                                           \
-        return GET_OBJ_##PROPERTY(self);        \
+        return GET_VIEW_##PROPERTY(self);        \
     }
 
 #define SET_PROPERTY(TYPE,PROPERTY,NAME)       \
     -(void)set##NAME:(TYPE)PROPERTY            \
     {                                          \
-        SET_OBJ_##PROPERTY(self,PROPERTY);     \
+        SET_VIEW_##PROPERTY(self,PROPERTY);     \
     }
 
 #define GET_SET_PROPERTY(TYPE,PROPERTY,NAME)    \
