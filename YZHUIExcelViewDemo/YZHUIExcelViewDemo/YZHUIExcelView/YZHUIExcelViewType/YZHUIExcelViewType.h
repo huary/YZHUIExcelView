@@ -1,12 +1,13 @@
 //
 //  YZHUIExcelViewType.h
-//  易打分
+//  YZHApp
 //
 //  Created by yuan on 2017/7/18.
 //  Copyright © 2017年 yuan. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSInteger, NSExcelSeparatorLineType)
 {
